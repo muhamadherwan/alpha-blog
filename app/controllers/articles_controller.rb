@@ -6,7 +6,7 @@ class ArticlesController < ApplicationController
     end
 
     def index
-        @articles = Article.all
+        @articles = Article.all.order(created_at: :desc)
     end
 
     def new
@@ -19,6 +19,7 @@ class ArticlesController < ApplicationController
 
     def create
         @article = Article.new(article_params)
+        @article.user = User.first
         if @article.save
             flash[:notice] = "Article was saved."
             redirect_to @article
